@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "postbuild": "rm -rf out && mkdir -p out && cp -r .next/server/app/* out/ && mkdir -p out/_next && cp -r .next/static out/_next/",
+    "postbuild": "shx rm -rf out && shx mkdir -p out && shx cp -r .next/server/app/* out/ && shx mkdir -p out/_next && shx cp -r .next/static out/_next/",
     "dev": "next dev",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
@@ -21,16 +21,19 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.15",
     "@types/mdx": "^2.0.13",
     "@types/node": "^24.9.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.15",
-    "typescript": "^5.9.3",
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
-    "@eslint/eslintrc": "^3"
+    "ncp": "^2.0.0",
+    "postcss": "^8.5.6",
+    "rimraf": "^6.0.1",
+    "shx": "^0.4.0",
+    "tailwindcss": "^4.1.15",
+    "typescript": "^5.9.3"
   }
 }
