@@ -8,6 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://statistics-data-analysis.pages.dev'),
   title: {
     default: '统计与数据分析',
     template: '%s | 统计与数据分析',

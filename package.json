@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "postbuild": "if exist out rmdir /s /q out && mkdir out && xcopy /e /i .next\\server\\app out && mkdir out\\_next && xcopy /e /i .next\\static out\\_next\\static",
+    "postbuild": "rm -rf out && mkdir -p out && cp -r .next/server/app/* out/ && mkdir -p out/_next && cp -r .next/static out/_next/",
     "dev": "next dev",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
