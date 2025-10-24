@@ -1,0 +1,205 @@
+---
+title: Python编程基础
+description: 学习Python编程的基础知识，为数据分析打下坚实基础
+---
+
+# Python编程基础
+
+Python是一种简单易学、功能强大的编程语言，特别适合数据分析初学者。本章将带您从零开始学习Python编程。
+
+## 为什么选择Python？
+
+- **简单易学**：Python语法简洁明了，接近自然语言
+- **功能强大**：拥有丰富的数据分析库
+- **社区支持**：庞大的用户社区和丰富的学习资源
+- **跨平台**：可在Windows、Mac、Linux等系统运行
+
+## Python环境搭建
+
+### 安装Python
+
+1. 访问 [Python官网](https://www.python.org/)
+2. 下载最新版本的Python
+3. 按照安装向导完成安装
+
+### 安装Anaconda（推荐）
+
+Anaconda是一个Python数据科学平台，包含了大量预装的科学计算库：
+
+1. 访问 [Anaconda官网](https://www.anaconda.com/)
+2. 下载适合您操作系统的版本
+3. 安装完成后，您将拥有Jupyter Notebook等工具
+
+## Python基础语法
+
+### 变量和数据类型
+
+```python
+# 数字
+age = 25
+height = 175.5
+
+# 字符串
+name = "张三"
+university = "北京大学"
+
+# 布尔值
+is_student = True
+has_graduated = False
+
+# 列表
+scores = [85, 92, 78, 96, 88]
+subjects = ["数学", "英语", "物理", "化学"]
+
+# 字典
+student_info = {
+    "姓名": "张三",
+    "年龄": 20,
+    "专业": "统计学"
+}
+```
+
+### 基本运算
+
+```python
+# 数学运算
+a = 10
+b = 3
+
+print(a + b)  # 加法：13
+print(a - b)  # 减法：7
+print(a * b)  # 乘法：30
+print(a / b)  # 除法：3.333...
+print(a // b) # 整除：3
+print(a % b)  # 取余：1
+print(a ** b) # 幂运算：1000
+```
+
+### 条件语句
+
+```python
+score = 85
+
+if score >= 90:
+    grade = "优秀"
+elif score >= 80:
+    grade = "良好"
+elif score >= 70:
+    grade = "中等"
+elif score >= 60:
+    grade = "及格"
+else:
+    grade = "不及格"
+
+print(f"成绩：{score}，等级：{grade}")
+```
+
+### 循环语句
+
+```python
+# for循环
+subjects = ["数学", "英语", "物理", "化学"]
+for subject in subjects:
+    print(f"我正在学习{subject}")
+
+# while循环
+count = 1
+while count <= 5:
+    print(f"第{count}次循环")
+    count += 1
+
+# 列表推导式
+squares = [x**2 for x in range(1, 6)]
+print(squares)  # [1, 4, 9, 16, 25]
+```
+
+## 函数定义
+
+```python
+def calculate_average(scores):
+    """计算平均分"""
+    total = sum(scores)
+    count = len(scores)
+    return total / count
+
+def grading(score):
+    """根据分数判断等级"""
+    if score >= 90:
+        return "优秀"
+    elif score >= 80:
+        return "良好"
+    elif score >= 70:
+        return "中等"
+    elif score >= 60:
+        return "及格"
+    else:
+        return "不及格"
+
+# 使用函数
+student_scores = [85, 92, 78, 96, 88]
+avg_score = calculate_average(student_scores)
+grade = grading(avg_score)
+
+print(f"平均分：{avg_score:.2f}")
+print(f"等级：{grade}")
+```
+
+## 文件操作
+
+```python
+# 写入文件
+data = ["张三,85", "李四,92", "王五,78"]
+
+with open("students.txt", "w", encoding="utf-8") as file:
+    for line in data:
+        file.write(line + "\n")
+
+# 读取文件
+with open("students.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        name, score = line.strip().split(",")
+        print(f"学生：{name}，分数：{score}")
+```
+
+## 常用内置函数
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+print(len(numbers))    # 长度：5
+print(sum(numbers))    # 求和：15
+print(max(numbers))    # 最大值：5
+print(min(numbers))    # 最小值：1
+print(sorted(numbers, reverse=True))  # 排序：[5, 4, 3, 2, 1]
+
+# 字符串方法
+text = "  Hello World  "
+print(text.strip())     # 去除空格："Hello World"
+print(text.upper())     # 转大写："  HELLO WORLD  "
+print(text.lower())     # 转小写："  hello world  "
+print(text.replace("World", "Python"))  # 替换："  Hello Python  "
+```
+
+## 练习题
+
+### 练习1：学生成绩管理
+编写一个程序，管理学生成绩：
+1. 输入多个学生的姓名和成绩
+2. 计算平均分
+3. 找出最高分和最低分
+4. 统计各等级人数
+
+### 练习2：文本分析
+编写一个程序分析文本：
+1. 统计文本中的字符数、单词数
+2. 找出出现频率最高的单词
+3. 计算平均单词长度
+
+## 下一步
+
+掌握了Python基础后，我们将学习如何使用Python进行数据处理和分析。下一章我们将介绍Pandas库，这是Python数据分析的核心工具。
+
+<Cards>
+  <Card title="数据处理实践" href="/docs/data-processing" />
+  <Card title="统计学概念" href="/docs/statistics" />
+</Cards>

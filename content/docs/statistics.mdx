@@ -1,0 +1,354 @@
+---
+title: 统计学概念
+description: 掌握数据分析中的核心统计学概念和方法
+---
+
+# 统计学概念
+
+统计学是数据分析的理论基础。本章将介绍数据分析中最重要的统计学概念，帮助您建立数据思维。
+
+## 什么是统计学？
+
+统计学是收集、分析、解释和展示数据的科学。它帮助我们：
+- 从数据中发现规律和趋势
+- 做出基于证据的决策
+- 量化不确定性
+- 验证假设和理论
+
+## 描述统计学
+
+描述统计学用于总结和描述数据的基本特征。
+
+### 集中趋势
+
+#### 平均数（均值）
+所有数值的总和除以数值的个数。
+
+```python
+import numpy as np
+
+scores = [85, 92, 78, 96, 88, 91, 84, 89]
+mean_score = np.mean(scores)
+print(f"平均分：{mean_score:.2f}")  # 平均分：87.88
+```
+
+#### 中位数
+将数据从小到大排列后，位于中间位置的数值。
+
+```python
+median_score = np.median(scores)
+print(f"中位数：{median_score}")  # 中位数：88.5
+```
+
+#### 众数
+出现频率最高的数值。
+
+```python
+from scipy import stats
+
+mode_result = stats.mode(scores)
+print(f"众数：{mode_result.mode[0]}")
+```
+
+### 离散程度
+
+#### 极差
+最大值与最小值的差。
+
+```python
+range_score = max(scores) - min(scores)
+print(f"极差：{range_score}")  # 极差：18
+```
+
+#### 方差
+各数值与平均数差的平方的平均数。
+
+```python
+variance = np.var(scores)
+print(f"方差：{variance:.2f}")
+```
+
+#### 标准差
+方差的平方根，表示数据的离散程度。
+
+```python
+std_dev = np.std(scores)
+print(f"标准差：{std_dev:.2f}")
+```
+
+### 分布形状
+
+#### 偏度（Skewness）
+衡量数据分布的对称性。
+
+```python
+from scipy.stats import skew
+
+skewness = skew(scores)
+print(f"偏度：{skewness:.2f}")
+
+if skewness > 0:
+    print("右偏分布（正偏）")
+elif skewness < 0:
+    print("左偏分布（负偏）")
+else:
+    print("对称分布")
+```
+
+#### 峰度（Kurtosis）
+衡量数据分布的尖锐程度。
+
+```python
+from scipy.stats import kurtosis
+
+kurt = kurtosis(scores)
+print(f"峰度：{kurt:.2f}")
+```
+
+## 概率基础
+
+### 概率的定义
+概率是事件发生可能性的数值度量，取值范围为0到1。
+
+### 概率的性质
+1. 任何事件的概率都在0和1之间
+2. 必然事件的概率为1
+3. 不可能事件的概率为0
+4. 所有可能结果的概率之和为1
+
+### 条件概率
+在已知某个条件下，另一个事件发生的概率。
+
+```python
+# 示例：学生通过考试的概率
+# P(通过|努力学习) = 0.9
+# P(通过|不努力学习) = 0.3
+
+def conditional_probability(study_hard=True):
+    if study_hard:
+        return 0.9
+    else:
+        return 0.3
+
+print(f"努力学习通过概率：{conditional_probability(True)}")
+print(f"不努力学习通过概率：{conditional_probability(False)}")
+```
+
+## 常见概率分布
+
+### 正态分布
+最重要的连续概率分布，呈钟形曲线。
+
+```python
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# 生成正态分布数据
+x = np.linspace(-4, 4, 100)
+y = norm.pdf(x, 0, 1)  # 标准正态分布
+
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, 'b-', linewidth=2, label='标准正态分布')
+plt.title('正态分布')
+plt.xlabel('x')
+plt.ylabel('概率密度')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+### 二项分布
+描述n次独立试验中成功次数的分布。
+
+```python
+from scipy.stats import binom
+
+# 10次投硬币，正面朝上的概率分布
+n = 10  # 试验次数
+p = 0.5  # 成功概率
+
+x = np.arange(0, n+1)
+y = binom.pmf(x, n, p)
+
+plt.figure(figsize=(10, 6))
+plt.bar(x, y, alpha=0.7)
+plt.title('二项分布 (n=10, p=0.5)')
+plt.xlabel('成功次数')
+plt.ylabel('概率')
+plt.show()
+```
+
+## 推断统计学
+
+推断统计学用于从样本数据推断总体特征。
+
+### 抽样分布
+样本统计量的概率分布。
+
+### 中心极限定理
+当样本量足够大时，样本均值的分布趋近于正态分布。
+
+```python
+# 演示中心极限定理
+sample_means = []
+population = np.random.exponential(2, 10000)  # 指数分布总体
+
+for i in range(1000):
+    sample = np.random.choice(population, 30)
+    sample_means.append(np.mean(sample))
+
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.hist(population, bins=50, alpha=0.7, density=True)
+plt.title('总体分布（指数分布）')
+plt.xlabel('值')
+plt.ylabel('密度')
+
+plt.subplot(1, 2, 2)
+plt.hist(sample_means, bins=50, alpha=0.7, density=True)
+plt.title('样本均值分布（近似正态）')
+plt.xlabel('样本均值')
+plt.ylabel('密度')
+
+plt.tight_layout()
+plt.show()
+```
+
+### 置信区间
+对总体参数的区间估计。
+
+```python
+from scipy.stats import t
+
+def confidence_interval(data, confidence=0.95):
+    """计算置信区间"""
+    n = len(data)
+    mean = np.mean(data)
+    std_err = stats.sem(data)  # 标准误
+    
+    # t分布的临界值
+    alpha = 1 - confidence
+    t_critical = t.ppf(1 - alpha/2, n-1)
+    
+    margin_error = t_critical * std_err
+    ci_lower = mean - margin_error
+    ci_upper = mean + margin_error
+    
+    return ci_lower, ci_upper
+
+# 示例
+sample_data = [85, 92, 78, 96, 88, 91, 84, 89, 93, 87]
+ci_lower, ci_upper = confidence_interval(sample_data)
+print(f"95%置信区间：[{ci_lower:.2f}, {ci_upper:.2f}]")
+```
+
+## 假设检验
+
+假设检验是统计推断的重要方法。
+
+### 基本步骤
+1. 建立原假设（H₀）和备择假设（H₁）
+2. 选择显著性水平（α）
+3. 计算检验统计量
+4. 确定p值
+5. 做出统计决策
+
+### t检验示例
+
+```python
+from scipy.stats import ttest_1samp, ttest_ind
+
+# 单样本t检验
+# 检验学生平均分是否显著不同于85分
+sample_scores = [85, 92, 78, 96, 88, 91, 84, 89, 93, 87]
+t_stat, p_value = ttest_1samp(sample_scores, 85)
+
+print(f"t统计量：{t_stat:.3f}")
+print(f"p值：{p_value:.3f}")
+
+if p_value < 0.05:
+    print("拒绝原假设，平均分显著不同于85分")
+else:
+    print("接受原假设，平均分不显著不同于85分")
+```
+
+## 相关性分析
+
+### 皮尔逊相关系数
+衡量两个连续变量之间线性关系的强度。
+
+```python
+# 生成示例数据
+np.random.seed(42)
+study_hours = np.random.normal(5, 2, 100)
+exam_scores = 60 + 5 * study_hours + np.random.normal(0, 10, 100)
+
+# 计算相关系数
+correlation = np.corrcoef(study_hours, exam_scores)[0, 1]
+print(f"学习时间与考试成绩的相关系数：{correlation:.3f}")
+
+# 可视化
+plt.figure(figsize=(10, 6))
+plt.scatter(study_hours, exam_scores, alpha=0.6)
+plt.xlabel('学习时间（小时）')
+plt.ylabel('考试成绩')
+plt.title(f'学习时间与考试成绩的关系 (r = {correlation:.3f})')
+plt.show()
+```
+
+## 实际应用案例
+
+### 案例：学生成绩分析
+
+```python
+import pandas as pd
+
+# 创建学生成绩数据
+np.random.seed(42)
+students_data = {
+    '学号': range(1, 101),
+    '数学': np.random.normal(80, 15, 100),
+    '英语': np.random.normal(75, 12, 100),
+    '物理': np.random.normal(78, 18, 100)
+}
+
+df = pd.DataFrame(students_data)
+
+# 描述性统计
+print("各科成绩描述性统计：")
+print(df[['数学', '英语', '物理']].describe())
+
+# 相关性分析
+print("\n各科成绩相关性：")
+correlation_matrix = df[['数学', '英语', '物理']].corr()
+print(correlation_matrix)
+
+# 可视化相关性矩阵
+import seaborn as sns
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
+plt.title('各科成绩相关性矩阵')
+plt.show()
+```
+
+## 练习题
+
+### 练习1：描述统计分析
+给定一组数据，计算其均值、中位数、标准差，并判断分布的偏度。
+
+### 练习2：假设检验
+某班级声称其平均成绩高于全校平均分75分，请设计假设检验来验证这个声明。
+
+### 练习3：相关性分析
+分析学习时间、睡眠时间与考试成绩之间的关系。
+
+## 下一步
+
+掌握了统计学基础概念后，我们将学习如何在实际数据分析中应用这些知识。
+
+<Cards>
+  <Card title="数据处理实践" href="/docs/data-processing" />
+  <Card title="可视化技术" href="/docs/visualization" />
+</Cards>

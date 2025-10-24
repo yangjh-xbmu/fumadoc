@@ -1,6 +1,7 @@
 {
-  "name": "example-next-mdx",
-  "version": "0.0.0",
+  "name": "statistics-data-analysis",
+  "version": "1.0.0",
+  "description": "为人文社科领域的数据分析初学者量身打造的在线课程",
   "private": true,
   "scripts": {
     "build": "next build",
