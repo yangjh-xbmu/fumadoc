@@ -27,11 +27,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="zh-CN" className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
-        <RootProvider
-          search={{
-            enabled: true,
-          }}
-        >
+        <RootProvider>
           {children}
         </RootProvider>
       </body>
