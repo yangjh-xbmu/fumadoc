@@ -1,0 +1,60 @@
+---
+title: 部署到 Cloudflare Pages
+description: 如何将 Fumadocs 项目部署到 Cloudflare Pages
+---
+
+## 部署到 Cloudflare Pages
+
+本项目已配置为静态站点，可以直接部署到 Cloudflare Pages。
+
+### 配置说明
+
+项目已经配置了以下设置以支持静态导出：
+
+```js title="next.config.mjs"
+const config = {
+  reactStrictMode: true,
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
+};
+```
+
+### 部署步骤
+
+1. **推送代码到 GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+
+2. **连接 Cloudflare Pages**
+   - 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
+   - 进入 Pages 部分
+   - 点击 "Create a project"
+   - 选择 "Connect to Git"
+   - 选择你的 GitHub 仓库
+
+3. **配置构建设置**
+   - **Framework preset**: Next.js (Static HTML Export)
+   - **Build command**: `npm run build`
+   - **Build output directory**: `out`
+   - **Root directory**: `my-app` (如果项目在子目录中)
+
+4. **环境变量**（如果需要）
+   - `NODE_VERSION`: `20`
+
+### 自动部署
+
+一旦配置完成，每次推送到 main 分支时，Cloudflare Pages 会自动：
+- 检测代码变更
+- 运行构建命令
+- 部署新版本
+- 提供全球 CDN 加速
+
+### 预览部署
+
+Cloudflare Pages 还会为每个 Pull Request 创建预览部署，方便测试和审查。
